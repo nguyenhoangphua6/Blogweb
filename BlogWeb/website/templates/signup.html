@@ -1,0 +1,48 @@
+{% extends "base.html" %} {% block title %}Sign Up{% endblock %} {% block
+content %}
+<form method="POST">
+  <h3 align="center"style="color: white;">Đăng ký</h3>
+  <div class="form-group">
+    <label for="email" style="color: white;">Địa chỉ email</label>
+    <input
+      type="text"
+      id="email"
+      name="email"
+      class="form-control"
+      placeholder="Nhập địa chỉ email"
+    />
+    <label for="username"style="color: white;">Tên người dùng</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      class="form-control"
+      placeholder="Nhập tên người dùng"
+    />
+    <label for="password1"style="color: white;">Mật khẩu</label>
+    <input
+      type="password"
+      id="password1"
+      name="password1"
+      class="form-control"
+      placeholder="Nhập mật khẩu"
+    />
+    <label for="password2"style="color: white;">Nhập lại mật khẩu</label>
+    <input
+      type="password"
+      id="password2"
+      name="password2"
+      class="form-control"
+      placeholder="Nhập lại mật khẩu"
+    />
+    <br />
+    <div align="center">
+      <button class="btn btn-lg" type="submit"
+      style=" background-color: #2ecc71;
+      box-shadow: 0px 5px 0px 0px #15B358;
+      font-weight: bold;"
+      onmouseover="this.style.color='red';" onmouseout="this.style.color='black';">Đăng ký</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

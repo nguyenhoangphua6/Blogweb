@@ -1,0 +1,123 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+  %}
+  <h1 align="center" style="color: white;">{% block header %}Bảng tin{% endblock %}</h1>
+  <div id="posts">
+    {% for post in posts %}
+    <!--Tạo 1 khung chứ bài đăng chứa các thông tin tác giả, ngày đăng-->
+    <div class="card border-dark">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <!--Click vào user name-->
+        <a href="/posts/{{post.user.username}}"
+        style="text-decoration: none;
+        color: black;
+        font-weight: bold;
+        "onmouseover="this.style.color='orange';" onmouseout="this.style.color='black';"
+        >{{post.user.username}}</a>
+        {% if user.id == post.author %} <!-- nếu id của bài viết là tác giả thì mới có nút xóa-->
+        <div class="btn-group">  <!-- thẻ này tạo nút xổ xuống, xổ xuống là có xóa bài viết-->
+          <button
+            type="button"
+            class="btn btn-sm btn-primary dropdown-toggle"
+            data-bs-toggle="dropdown"
+          ></button> <!-- nút xổ xuống-->
+          <ul class="dropdown-menu">
+            <li>
+              <a href="/delete-post/{{post.id}}" class="dropdown-item">Xóa bài viết</a> <!-- xóa id của bài viết-->
+            </li> 
+          </ul>
+        </div>
+        {% endif %}
+      </div>
+      <!--Nội dung bài post-->
+      <div class="card-body">
+        <div class="card-text">{{post.text}}</div>
+        <br />
+        <div class="collapse" id="comments-{{post.id}}"> <!--Lớp thu gọn bình luận với post id là bài đăng đó-->
+          <div class="card">
+            <div class="card-body" id="comments-expanded-{{post.id}}"> <!--Lớp thu gọn bình luận Post id là id của bài đăng -->
+              {% for comment in post.comments %}  <!--Tạo vòng for xem tất cả bình luận của bài đăng đó (post)-->
+              <div class="d-flex justify-content-between align-items-center"> <!--Muốn tạo 1 nút xóa bên phải của bình luận-->
+                <div>
+                  <a href="/posts/{{comment.user.username}}"
+                  style="text-decoration: none;
+                  color: black;
+                  font-weight: bold;
+                  "onmouseover="this.style.color='orange';" onmouseout="this.style.color='black';"
+                    >{{comment.user.username}}</a
+                  >: {{comment.text}} <!--User. name của người bình luận rồi : sau đó là bình luận-->
+                </div>
+                <div>
+                  <small class="text-muted"> {{comment.date_created}}</small>  <!--tạo 1 thẻ nhỏ và ghi ngày của bình luận ấy-->
+                  {% if user.id == comment.author or user.id == post.author %} <!-- nếu người dùng đang đăng nhập là tác giả của bình luận hoặc là tác giả của bài đăng-->
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-primary dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                    ></button>  <!--tạo nút xổ xuống (bên phải bình luận), nút xổ xuống sẽ là xóa-->
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a
+                          href="/delete-comment/{{comment.id}}"
+                          class="dropdown-item"
+                          >Xóa bình luận</a
+                        ><!-- xóa bình luận-->
+                      </li>
+                    </ul>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <p class="card-text"> <!--đây là cái biểu mẫu dưới bằng đăng. Giúp mình có thể đưa ra 1 comment-->
+          {% if post.comments|length > 0 %} <!-- cung cấp độ dài của danh sách bình luận-->
+          <a data-bs-toggle="collapse" href="#comments-{{post.id}}" role="button"> <!-- tạo 1 nút thu gọn - mở rộng comment-->
+            <small>Hiển thị/Thu gọn {{post.comments|length}} Bình luận</small><!-- tạo 1 nút thu gọn view comment-->
+          </a>
+          {% else %}
+          <small class="text-muted">Không có bình luận</small> <!--Nếu độ dài của danh sách bình luận = 0 thì ghi ra 1 thẻ nhỏ k có bình luận-->
+          {% endif %}
+        </p>
+        <form
+          class="input-group mb-3"
+          method="POST"
+          action="/create-comment/{{post.id}}"
+        >       <!--Nó sẽ gửi 1 yêu cầu bài đăng đến URL tạo nhận xét với thông tin trong form này-->
+          <input
+            type="text"
+            id="text"
+            name="text"
+            class="form-control"
+            placeholder="Hãy bình luận!"
+          />
+          <button type="submit" class="btn btn-lg"
+          style=" background-color: #2ecc71;
+          box-shadow: 5px 0px 0px 0px #15B358;
+          "
+        onmouseover="this.style.color='red';" onmouseout="this.style.color='black';">Bình luận</button>  <!--nút comment-->
+        </form>
+      </div>
+      <!--Ngày giờ tạo post-->
+      <div class="card-footer text-muted">{{post.date_created}}</div>
+    </div>
+    <br/ > {% endfor %}
+  </div>
+  {% block footer %}
+  <div align="center">
+    <!--Tạo btn create a post-->
+    <a href="/create-post"
+      ><button type="button" class="btn btn-lg"
+      style=" background-color: #2ecc71;
+            box-shadow: 0px 5px 0px 0px #15B358;
+            font-weight: bold;
+            "
+    onmouseover="this.style.color='red';" onmouseout="this.style.color='black';">
+        Hãy tạo một bài viết
+      </button></a
+    >
+  </div>
+  {% endblock %} {% endblock %}
+  

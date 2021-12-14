@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<!--Btn Post-->
+<h1 align="center" style="color: white;">Tạo bài viết</h1>     <!-- tiêu đề tạo bài viết -->
+
+<form method="POST"> <!-- tạo 1 phương thức --> 
+  <textarea name="text" id="text" class="form-control"></textarea> <!-- tạo vùng văn bản với văn bản và id là text-->
+  <br /> <!-- ngắt dòng -->
+  <div class="row justify-content-center">
+  <div class="col-1"><!-- div này căn chỉnh ở trung tâm-->
+    
+    <button type="submit" class="btn btn-lg "
+    style=" background-color: #2ecc71;
+            font-weight: bold;
+            "
+    onmouseover="this.style.color='red';" onmouseout="this.style.color='black';">Đăng</button> <!-- tạo nút đăng-->
+  </div>
+</form>
+<br />
+<div class="col-1"> <!-- div này căn chỉnh ở trung tâm-->
+  <a href="/home"
+    ><button type="button" class="btn btn-lg"
+    style=" background-color: #9da7a1;
+            color: white;
+            inline-size: 100px;
+            ">Trở về</button> <!-- tạo nút trở về-->
+    </a 
+  >
+</div>
+</div>
+{% endblock %}

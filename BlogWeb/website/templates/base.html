@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+    <div class="bg-image position-relative" 
+    
+     style="background-image: url('https://i.pinimg.com/originals/3d/c4/49/3dc449b04d9ace524a0ecd247e1fdc83.png');
+            min-height: 100vh;
+            background-size: cover;
+            position: fixed;
+            background-attachment: fixed
+            ">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="position: relative;">
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar">
+          <!--Trang chủ-->
+          <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/home">Trang chủ</a>
+            {% if user.is_authenticated %}  <!-- nếu có người dùng thì hiện nút đăng xuất-->
+            <a class="nav-item nav-link" href="/logout">Đăng xuất</a> <!-- đăng xuất-->
+            <a class="nav-item nav-link navbar-right" style="margin-left: 1030px;" href="/posts/{{user.username}}">Trang cá nhân</a>
+            {% else %} <!--nếu không có người dùng thì hiện đăng nhập-->
+            <a class="nav-item nav-link" href="/login">Đăng nhập</a> <!-- đăng nhập-->
+            <a class="nav-item nav-link" href="/sign-up">Đăng ký</a>  <!-- đăng ký-->
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %} <!-- những thông báo sẽ nhấp nháy-->
+    {% if messages %} {% for category, message in messages %}  <!-- cung cấp cho ta những thông báo-->
+    {% if category == 'error' %}
+    <div class="alert alert-danger alter-dismissible fade show" role="alert">
+      {{ message }} <!-- hiển thị thông báo-->
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button> 
+    </div><!-- đây là thông báo đỏ - nguy hiểm -->
+    {% else %}
+    <div class="alert alert-success alter-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div> <!-- đây là thông báo xanh - thành công -->
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
+    <div class="container">{% block content %}{% endblock %}</div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </div>
+  </body>
+</html>
