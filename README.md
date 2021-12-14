@@ -1,6 +1,6 @@
 # Giới thiệu về blogweb
 
-[Tiếng Việt]
+[Tiếng Việt] \n
 Xin chào mọi người. Cám ơn mọi người đã ghé thăm tác phẩm của chúng tôi. Bài web này được viết bằng HTML, Bootstrap , Flask và SQLAlChemy.Ngoài ra chúng rôi đã cố gắng comment hết sức chi tiết để mọi người đọc và hiểu được code.Mong mọi người hãy trân trọng nó. Xin cám ơn. 
 
 [English]
